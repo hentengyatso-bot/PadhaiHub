@@ -1,0 +1,44 @@
+﻿@model PadhaiHub.Models.Question
+@* Shared by Create and Edit so the fields are written once *@
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="mb-3">
+    <label asp-for="QuestionText" class="form-label"></label>
+    <textarea asp-for="QuestionText" class="form-control" rows="2"></textarea>
+    <span asp-validation-for="QuestionText" class="text-danger"></span>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label asp-for="OptionA" class="form-label"></label>
+        <input asp-for="OptionA" class="form-control" />
+        <span asp-validation-for="OptionA" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="OptionB" class="form-label"></label>
+        <input asp-for="OptionB" class="form-control" />
+        <span asp-validation-for="OptionB" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="OptionC" class="form-label"></label>
+        <input asp-for="OptionC" class="form-control" />
+        <span asp-validation-for="OptionC" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label asp-for="OptionD" class="form-label"></label>
+        <input asp-for="OptionD" class="form-control" />
+        <span asp-validation-for="OptionD" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="CorrectOption" class="form-label"></label>
+    <select asp-for="CorrectOption" class="form-select" style="max-width: 120px;">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+        <option>D</option>
+    </select>
+    <span asp-validation-for="CorrectOption" class="text-danger"></span>
+</div>

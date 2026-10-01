@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PadhaiHub.Models.User>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1 class="h3">Users</h1>
+
+<form asp-action="Index" method="get" class="row g-2 mb-3" role="search">
+    <div class="col-md-6">
+        <input type="search" name="search" value="@ViewData["Search"]"
+               class="form-control" placeholder="Search by name or email" />
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</form>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Courses</th>
+            <th>Joined</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            var otherRole = u.Role == "Admin" ? "Member" : "Admin";
+            <tr>
+                <td>@u.FullName</td>
+                <td>@u.Email</td>
+                <td>
+                    <span class="badge @(u.Role == "Admin" ? "bg-dark" : "bg-secondary")">
+                        @u.Role
+                    </span>
+                </td>
+                <td>@u.Enrollments.Count</td>
+                <td>@u.CreatedAt.ToString("dd MMM yyyy")</td>
+                <td class="text-end text-nowrap">
+                    <form asp-action="ChangeRole" asp-route-id="@u.UserId"
+                          method="post" class="d-inline">
+                        <input type="hidden" name="role" value="@otherRole" />
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            Make @otherRole
+                        </button>
+                    </form>
+                    <form asp-action="Delete" asp-route-id="@u.UserId"
+                          method="post" class="d-inline"
+                          onsubmit="return confirm('Delete this user and all their activity?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

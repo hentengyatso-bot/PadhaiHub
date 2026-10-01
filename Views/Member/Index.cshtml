@@ -1,0 +1,87 @@
+﻿@model PadhaiHub.ViewModels.MemberDashboardViewModel
+@{
+    ViewData["Title"] = "My Learning";
+}
+
+<header class="d-flex align-items-center gap-3 mb-4">
+    <img src="@(Model.ProfileImagePath ?? "/images/avatar-placeholder.png")"
+         alt="Your profile photo"
+         class="rounded-circle"
+         width="72" height="72"
+         style="object-fit: cover;" />
+    <div>
+        <h1 class="h3 mb-0">Welcome back, @Model.FullName</h1>
+        <a asp-action="Profile">Edit profile</a>
+    </div>
+</header>
+
+<section class="row g-3 mb-4 text-center">
+    <div class="col-4"><div class="stat-box"><strong>@Model.Enrollments.Count</strong><span>Courses</span></div></div>
+    <div class="col-4"><div class="stat-box"><strong>@Model.Enrollments.Count(e => e.IsCompleted)</strong><span>Completed</span></div></div>
+    <div class="col-4"><div class="stat-box"><strong>@Model.PostCount</strong><span>Posts</span></div></div>
+</section>
+
+<section class="mb-4" aria-labelledby="my-courses">
+    <h2 id="my-courses" class="h4">My courses</h2>
+    @if (!Model.Enrollments.Any())
+    {
+        <p>You have not enrolled in any course yet. <a asp-controller="Courses" asp-action="Index">Browse courses</a>.</p>
+    }
+    else
+    {
+        <table class="table align-middle">
+            <thead>
+                <tr><th>Course</th><th>Enrolled on</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody>
+                @foreach (var e in Model.Enrollments)
+                {
+                    <tr>
+                        <td><a asp-controller="Courses" asp-action="Details" asp-route-id="@e.CourseId">@e.Course?.Title</a></td>
+                        <td>@e.EnrolledAt.ToString("dd MMM yyyy")</td>
+                        <td>
+                            @if (e.IsCompleted)
+                            {
+                                <span class="badge bg-success">Completed</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">In progress</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <form asp-controller="Enrollments" asp-action="ToggleComplete"
+                                  asp-route-id="@e.EnrollmentId" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-success">
+                                    @(e.IsCompleted ? "Mark in progress" : "Mark completed")
+                                </button>
+                            </form>
+                            <form asp-controller="Enrollments" asp-action="Unenrol"
+                                  asp-route-id="@e.EnrollmentId" method="post" class="d-inline"
+                                  onsubmit="return confirm('Leave this course?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Leave</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</section>
+
+<section aria-labelledby="my-results">
+    <h2 id="my-results" class="h4">Recent quiz results</h2>
+    @if (!Model.RecentAttempts.Any())
+    {
+        <p>No quiz attempts yet.</p>
+    }
+    <ul class="list-group">
+        @foreach (var a in Model.RecentAttempts)
+        {
+            <li class="list-group-item d-flex justify-content-between">
+                <span>@a.Quiz?.Title</span>
+                <span>@a.Score / @a.TotalQuestions &middot; @a.AttemptedAt.ToString("dd MMM yyyy")</span>
+            </li>
+        }
+    </ul>
+</section>

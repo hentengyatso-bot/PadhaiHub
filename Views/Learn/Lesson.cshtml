@@ -1,0 +1,49 @@
+﻿@model PadhaiHub.Models.Lesson
+@{
+    ViewData["Title"] = Model.Title;
+    var lessons = Model.Course!.Lessons.OrderBy(l => l.LessonOrder).ToList();
+    var index = lessons.FindIndex(l => l.LessonId == Model.LessonId);
+    var previous = index > 0 ? lessons[index - 1] : null;
+    var next = index < lessons.Count - 1 ? lessons[index + 1] : null;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Courses" asp-action="Index">Courses</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.CourseId">@Model.Course.Title</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+    </ol>
+</nav>
+
+<article class="lesson">
+    <h1>@Model.Title</h1>
+    <p class="text-muted">Lesson @(index + 1) of @lessons.Count</p>
+
+    @if (!string.IsNullOrEmpty(Model.VideoUrl))
+    {
+        <div class="ratio ratio-16x9 mb-4">
+            <iframe src="@Model.VideoUrl" title="Video for @Model.Title" allowfullscreen></iframe>
+        </div>
+    }
+
+    <div class="lesson-content" style="white-space: pre-line;">@Model.Content</div>
+</article>
+
+<nav class="d-flex justify-content-between mt-4" aria-label="Lesson navigation">
+    @if (previous != null)
+    {
+        <a class="btn btn-outline-secondary" asp-action="Lesson" asp-route-id="@previous.LessonId">&larr; @previous.Title</a>
+    }
+    else
+    {
+        <span></span>
+    }
+    @if (next != null)
+    {
+        <a class="btn btn-primary" asp-action="Lesson" asp-route-id="@next.LessonId">@next.Title &rarr;</a>
+    }
+    else
+    {
+        <a class="btn btn-success" asp-controller="Courses" asp-action="Details" asp-route-id="@Model.CourseId">Back to course</a>
+    }
+</nav>

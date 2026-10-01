@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin - PadhaiHub</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @* Lets a single admin page add its own internal <style> block *@
+    @await RenderSectionAsync("Styles", required: false)
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    @{
+        var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+        string Active(string name) => controller == name ? "active" : "";
+    }
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 admin-sidebar p-3" aria-label="Admin navigation">
+                <a class="d-block text-white fw-bold fs-5 mb-4 text-decoration-none" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin Panel</a>
+                <ul class="nav flex-column gap-1">
+                    <li><a class="nav-link @Active("Dashboard")" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                    <li><a class="nav-link @Active("Categories")" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a></li>
+                    <li><a class="nav-link @Active("Courses")" asp-area="Admin" asp-controller="Courses" asp-action="Index">Courses</a></li>
+                    <li><a class="nav-link @Active("Lessons")" asp-area="Admin" asp-controller="Lessons" asp-action="Index">Lessons</a></li>
+                    <li><a class="nav-link @Active("Quizzes")" asp-area="Admin" asp-controller="Quizzes" asp-action="Index">Quizzes</a></li>
+                    <li><a class="nav-link @Active("Users")" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
+                    <li><a class="nav-link @Active("DiscussionPosts")" asp-area="Admin" asp-controller="DiscussionPosts" asp-action="Index">Discussions</a></li>
+                    <li class="mt-4"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">&larr; View website</a></li>
+                    <li>
+                        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+                            <button type="submit" class="btn btn-link nav-link">Log out</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+
+            <main class="col-md-9 col-lg-10 p-4">
+                <partial name="_Alerts" />
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

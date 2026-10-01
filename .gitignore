@@ -1,0 +1,31 @@
+﻿# Build artifacts
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Publish output
+publish/
+*.pubxml
+
+# Local settings
+appsettings.Development.local.json
+
+# Uploaded files (regenerated at runtime)
+wwwroot/uploads/

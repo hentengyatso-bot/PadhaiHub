@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<article>
+    <header class="mb-4">
+        <h1>About PadhaiHub</h1>
+        <p class="lead">Our mission is to make good learning material free and easy to reach.</p>
+    </header>
+
+    <section class="row g-4 mb-5">
+        <div class="col-md-4">
+            <h2 class="h5">Our mission</h2>
+            <p>PadhaiHub exists so anyone with an internet connection can learn a subject properly: short lessons, a quiz to check understanding, and a discussion board to ask questions along the way — all free, with no account needed just to browse.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="h5">Objectives</h2>
+            <ul>
+                <li>Give every course a clear path: lessons in order, then a quiz.</li>
+                <li>Let learners track their own progress on one page.</li>
+                <li>Make it easy to ask a question and get a reply from other learners.</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h2 class="h5">Who it's for</h2>
+            <p>Students revising a topic from scratch, self-taught learners filling a gap, and anyone who prefers a short structured lesson over a long video. Registration is only required to enrol and track progress.</p>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="h4">Watch: how the platform works</h2>
+        @* HTML5 video: put your own file at wwwroot/media/intro.mp4 *@
+        <video controls width="640" poster="~/images/video-poster.png" class="w-100 rounded" style="max-width: 640px;">
+            <source src="~/media/intro.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+
+
+    <figure class="figure mb-5">
+        <img src="~/images/students.jpg" class="figure-img img-fluid rounded" alt="Students learning together" />
+        <figcaption class="figure-caption">Learners using the discussion board.</figcaption>
+    </figure>
+
+    <section id="faq" class="mb-5">
+        <h2 class="h4 mb-3">Frequently asked questions</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        Is PadhaiHub free?
+                    </button>
+                </h3>
+                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">Yes. Browsing the course catalogue and reading course details costs nothing. Registering a free account lets you enrol, take quizzes and post in discussions.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        Do I need to finish a course in order?
+                    </button>
+                </h3>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">Lessons are numbered in a suggested order, but once you are enrolled you can open any lesson at any time.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        Can I retake a quiz?
+                    </button>
+                </h3>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">Yes, as many times as you like. Every attempt is saved to your My Learning page so you can see how your score changes.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="mb-4">
+        <h2 class="h4 mb-3">Contact us</h2>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="p-3 border rounded h-100">
+                    <h3 class="h6">Email</h3>
+                    <p class="mb-0"><a href="mailto:support@padhaihub.com">support@padhaihub.com</a><br />We reply within two working days.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded h-100">
+                    <h3 class="h6">Already enrolled?</h3>
+                    <p class="mb-0">Questions about a specific course are usually answered faster on that course's discussion board — other learners can help too.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</article>

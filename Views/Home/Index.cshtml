@@ -1,0 +1,89 @@
+﻿@model List<PadhaiHub.Models.Course>
+@{
+    ViewData["Title"] = "Home";
+}
+
+@section Styles {
+    <style>
+        .hero-badge {
+            display: inline-block;
+            background-color: #fdf0d9;
+            color: #a9711a;
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            padding: .4em 1em;
+            border-radius: 999px;
+        }
+
+        .hero-heading {
+            font-family: 'Lora', Georgia, serif;
+            font-weight: 700;
+            font-size: 3rem;
+            line-height: 1.1;
+        }
+    </style>
+}
+
+<section class="row align-items-center g-5 py-4">
+    <div class="col-lg-6">
+        <span class="hero-badge">Learning that clicks</span>
+        <h1 class="hero-heading mt-3">Curiosity in.<br>Confidence out.</h1>
+        <p class="lead mt-3">
+            Explore university-quality videos, virtual labs, simulations and
+            problem-solving activities, built for independent learners and
+            thriving study communities.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <a class="btn btn-accent btn-lg"
+               asp-controller="Account" asp-action="Register">Start learning free</a>
+            <a class="btn btn-outline-secondary btn-lg"
+               asp-controller="Courses" asp-action="Index">Browse resources</a>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <img src="~/images/hero-students.jpg"
+             class="img-fluid rounded-4"
+             alt="Students studying together" />
+    </div>
+</section>
+
+<section aria-labelledby="latest-heading" class="mb-5 mt-5">
+    <h2 id="latest-heading" class="h4 mb-3">Latest courses</h2>
+    @if (!Model.Any())
+    {
+        <p>No courses yet. Log in as admin to add the first one.</p>
+    }
+    <div class="row g-4">
+        @foreach (var course in Model)
+        {
+            <div class="col-md-4">
+                <article class="card h-100 course-card">
+                    <img src="@(course.ImagePath ?? "/images/course-placeholder.png")"
+                         class="card-img-top"
+                         alt="Cover image for @course.Title" />
+                    <div class="card-body">
+                        <span class="badge bg-secondary">@course.Category?.Name</span>
+                        <h3 class="h5 card-title mt-2">@course.Title</h3>
+                        <p class="card-text">@course.Description</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a class="btn btn-outline-primary"
+                           asp-controller="Courses" asp-action="Details"
+                           asp-route-id="@course.CourseId">View course</a>
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+</section>
+
+<section aria-labelledby="how-heading">
+    <h2 id="how-heading" class="h4 mb-3">How it works</h2>
+    <ol>
+        <li>Register a free account.</li>
+        <li>Enrol in a course and work through its lessons.</li>
+        <li>Test yourself with the course quiz and discuss questions with other learners.</li>
+    </ol>
+</section>

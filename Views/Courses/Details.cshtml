@@ -1,0 +1,134 @@
+﻿@model PadhaiHub.Models.Course
+@{
+    ViewData["Title"] = Model.Title;
+    var isEnrolled = (bool)(ViewData["IsEnrolled"] ?? false);
+    var isMember = User.IsInRole("Member");
+    var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+}
+
+<article>
+    <header class="row g-4 mb-4">
+        <div class="col-md-5">
+            <img src="@(Model.ImagePath ?? "/images/course-placeholder.png")"
+                 class="img-fluid rounded"
+                 alt="Cover image for @Model.Title" />
+        </div>
+        <div class="col-md-7">
+            <span class="badge bg-secondary">@Model.Category?.Name</span>
+            <span class="badge bg-info text-dark">@Model.Level</span>
+            <h1 class="mt-2">@Model.Title</h1>
+            <p>@Model.Description</p>
+
+            @if (!User.Identity!.IsAuthenticated)
+            {
+                <a class="btn btn-primary"
+                   asp-controller="Account" asp-action="Login"
+                   asp-route-returnUrl="@Url.Action("Details", "Courses", new { id = Model.CourseId })">
+                    Log in to enrol
+                </a>
+            }
+            else if (isMember && !isEnrolled)
+            {
+                <form asp-controller="Enrollments" asp-action="Enrol" method="post">
+                    <input type="hidden" name="courseId" value="@Model.CourseId" />
+                    <button type="submit" class="btn btn-primary">Enrol in this course</button>
+                </form>
+            }
+            else if (isEnrolled)
+            {
+                <p class="text-success fw-bold">You are enrolled in this course.</p>
+            }
+        </div>
+    </header>
+
+    <section class="mb-4" aria-labelledby="lessons-heading">
+        <h2 id="lessons-heading" class="h4">Lessons (@Model.Lessons.Count)</h2>
+        <ol class="list-group list-group-numbered">
+            @foreach (var lesson in Model.Lessons.OrderBy(l => l.LessonOrder))
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @lesson.Title
+                    @if (isEnrolled)
+                    {
+                        <a class="btn btn-sm btn-outline-primary"
+                           asp-controller="Learn" asp-action="Lesson"
+                           asp-route-id="@lesson.LessonId">Open</a>
+                    }
+                </li>
+            }
+        </ol>
+    </section>
+
+    <section class="mb-4" aria-labelledby="quiz-heading">
+        <h2 id="quiz-heading" class="h4">Self-assessment quizzes</h2>
+        @if (!Model.Quizzes.Any())
+        {
+            <p>No quizzes for this course yet.</p>
+        }
+        <ul>
+            @foreach (var quiz in Model.Quizzes)
+            {
+                <li>
+                    @quiz.Title
+                    @if (isEnrolled)
+                    {
+                        <a asp-controller="Learn" asp-action="Quiz" asp-route-id="@quiz.QuizId">Take quiz</a>
+                    }
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section id="discussion" aria-labelledby="discussion-heading">
+        <h2 id="discussion-heading" class="h4">Discussion</h2>
+
+        @if (isEnrolled)
+        {
+            <form asp-controller="Discussion" asp-action="Create" method="post"
+                  class="mb-3" id="postForm">
+                <input type="hidden" name="courseId" value="@Model.CourseId" />
+                <label for="message" class="form-label">Ask a question or share a tip</label>
+                <textarea id="message" name="message" class="form-control"
+                          rows="3" required minlength="2" maxlength="1000"></textarea>
+                <small id="charCount" class="form-text">0 / 1000</small>
+                <div><button type="submit" class="btn btn-primary mt-2">Post</button></div>
+            </form>
+        }
+
+        @foreach (var post in Model.DiscussionPosts.OrderByDescending(p => p.PostedAt))
+        {
+            <article class="border rounded p-3 mb-2">
+                <header class="d-flex justify-content-between">
+                    <strong>@post.User?.FullName</strong>
+                    <time datetime="@post.PostedAt.ToString("s")" class="text-muted small">
+                        @post.PostedAt.ToString("dd MMM yyyy, h:mm tt")
+                    </time>
+                </header>
+                <p class="mb-1">@post.Message</p>
+                @if (post.UserId.ToString() == currentUserId)
+                {
+                    <a class="btn btn-sm btn-link px-0"
+                       asp-controller="Discussion" asp-action="Edit"
+                       asp-route-id="@post.DiscussionPostId">Edit</a>
+                    <form asp-controller="Discussion" asp-action="Delete"
+                          asp-route-id="@post.DiscussionPostId"
+                          method="post" class="d-inline"
+                          onsubmit="return confirm('Delete this post?');">
+                        <button type="submit" class="btn btn-sm btn-link text-danger">Delete</button>
+                    </form>
+                }
+            </article>
+        }
+    </section>
+</article>
+
+@section Scripts {
+    <script>
+        // Live character counter for the discussion box
+        const box = document.getElementById("message");
+        const counter = document.getElementById("charCount");
+        if (box) {
+            box.addEventListener("input", () => counter.textContent = box.value.length + " / 1000");
+        }
+    </script>
+}

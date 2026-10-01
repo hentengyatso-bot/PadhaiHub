@@ -1,0 +1,28 @@
+﻿@model PadhaiHub.Models.Course
+@{
+    ViewData["Title"] = "Delete course";
+}
+
+<h1 class="h3">Delete course</h1>
+
+<div class="alert alert-warning">
+    Deleting <strong>@Model.Title</strong> also deletes its lessons, quizzes,
+    discussion posts and @Model.Enrollments.Count enrolment(s). This cannot be undone.
+</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Category</dt>
+    <dd class="col-sm-10">@Model.Category?.Name</dd>
+
+    <dt class="col-sm-2">Level</dt>
+    <dd class="col-sm-10">@Model.Level</dd>
+
+    <dt class="col-sm-2">Created</dt>
+    <dd class="col-sm-10">@Model.CreatedAt.ToString("dd MMM yyyy")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="CourseId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+</form>

@@ -1,0 +1,261 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/* ---------- PadhaiHub styles (external CSS) ---------- */
+
+.course-card img {
+    height: 180px;
+    object-fit: cover;
+}
+
+.course-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .course-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
+    }
+
+.stat-box {
+    border: 1px solid #dee2e6;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    background: #f8f9fa;
+}
+
+    .stat-box strong {
+        display: block;
+        font-size: 1.75rem;
+    }
+
+.lesson-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* Admin area */
+.admin-sidebar {
+    min-height: 100vh;
+    background: #1f2937;
+}
+
+    .admin-sidebar .nav-link {
+        color: #d1d5db;
+    }
+
+        .admin-sidebar .nav-link:hover,
+        .admin-sidebar .nav-link.active {
+            color: #fff;
+            background: #374151;
+            border-radius: 0.375rem;
+        }
+
+/* ---------- PadhaiHub design tokens ---------- */
+:root {
+    --ph-scholarly: #0F2A4C; /* darkest navy: headings, dark bands, footer */
+    --ph-primary: #1E4B8C; /* mid blue: links, focus states */
+    --ph-saffron: #F2A93B; /* accent orange: primary CTAs, the "Hub" in the wordmark */
+    --ph-success: #1F9574;
+    --ph-danger: #C23B34;
+    --ph-canvas: #F4F6FA; /* pale section background */
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ph-scholarly);
+}
+
+h1, h2, h3, .display-5, .display-6 {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 600;
+    color: var(--ph-scholarly);
+}
+
+.text-scholarly {
+    color: var(--ph-scholarly);
+}
+
+.text-saffron {
+    color: var(--ph-saffron);
+}
+
+.bg-canvas {
+    background-color: var(--ph-canvas);
+}
+
+/* Buttons */
+.btn, .badge {
+    border-radius: 999px;
+}
+
+.btn-primary {
+    background-color: var(--ph-scholarly);
+    border-color: var(--ph-scholarly);
+}
+
+    .btn-primary:hover, .btn-primary:focus {
+        background-color: #0b2038;
+        border-color: #0b2038;
+    }
+
+.btn-accent {
+    background-color: var(--ph-saffron);
+    border-color: var(--ph-saffron);
+    color: var(--ph-scholarly);
+    font-weight: 600;
+}
+
+    .btn-accent:hover, .btn-accent:focus {
+        background-color: #e0972a;
+        border-color: #e0972a;
+        color: var(--ph-scholarly);
+    }
+
+.btn-outline-secondary {
+    border-color: #d7dce3;
+    color: var(--ph-scholarly);
+}
+
+/* Badges */
+.badge {
+    font-weight: 600;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    font-size: .7rem;
+    padding: .4em .8em;
+}
+
+    .badge.bg-secondary {
+        background-color: #e9ecf2 !important;
+        color: var(--ph-scholarly) !important;
+    }
+
+    .badge.bg-info {
+        background-color: #dbe8fb !important;
+        color: var(--ph-primary) !important;
+    }
+
+    .badge.bg-success {
+        background-color: #e1f5ee !important;
+        color: var(--ph-success) !important;
+    }
+
+/* Cards */
+.card {
+    border: 1px solid #eceff3;
+    border-radius: 1rem;
+    box-shadow: 0 1px 2px rgba(15, 42, 76, 0.04);
+}
+
+.course-card:hover {
+    box-shadow: 0 0.75rem 1.5rem rgba(15, 42, 76, 0.10);
+}
+
+/* Alerts */
+.alert-success {
+    background-color: #e1f5ee;
+    color: #146c52;
+    border: none;
+}
+
+.alert-danger {
+    background-color: #fbe7e5;
+    color: #8f2b25;
+    border: none;
+}
+
+/* Forms */
+.form-control:focus {
+    border-color: var(--ph-primary);
+    box-shadow: 0 0 0 0.2rem rgba(30, 75, 140, 0.15);
+}
+
+.is-valid {
+    border-color: var(--ph-success);
+}
+
+.is-invalid {
+    border-color: var(--ph-danger);
+}
+
+/* Pagination */
+.page-link {
+    color: var(--ph-primary);
+    border-radius: .5rem;
+    margin: 0 .15rem;
+    border-color: #e3e7ee;
+}
+
+.page-item.active .page-link {
+    background-color: var(--ph-scholarly);
+    border-color: var(--ph-scholarly);
+}
+
+/* ---------- Navbar + Footer ---------- */
+.ph-logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background-color: var(--ph-scholarly);
+}
+
+.navbar .nav-link {
+    color: var(--ph-scholarly);
+    font-weight: 500;
+}
+
+    .navbar .nav-link.active, .navbar .nav-link:hover {
+        color: var(--ph-primary);
+    }
+
+.ph-footer {
+    background-color: var(--ph-scholarly);
+}
+
+.ph-footer-link {
+    color: rgba(255,255,255,.75);
+    text-decoration: none;
+}
+
+    .ph-footer-link:hover {
+        color: #fff;
+    }
+
+.site-footer {
+    background: #0f1f3d;
+    color: #e5e7eb;
+}
+
+.footer-link {
+    color: #cbd5e1;
+    text-decoration: none;
+}
+
+    .footer-link:hover {
+        color: #fff;
+        text-decoration: underline;
+    }

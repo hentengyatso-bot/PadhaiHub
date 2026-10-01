@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PadhaiHub.Models.DiscussionPost>
+@{
+    ViewData["Title"] = "Discussions";
+}
+
+<h1 class="h3">Discussion posts</h1>
+
+@if (!Model.Any())
+{
+    <p class="text-muted fst-italic">No posts yet.</p>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Member</th>
+                <th>Message</th>
+                <th>Posted</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Course?.Title</td>
+                    <td>@p.User?.FullName</td>
+                    <td>@p.Message</td>
+                    <td class="text-nowrap">@p.PostedAt.ToString("dd MMM yyyy HH:mm")</td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@p.DiscussionPostId"
+                              method="post"
+                              onsubmit="return confirm('Remove this post?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+  1214147
+</table>
+}1

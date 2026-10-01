@@ -1,0 +1,55 @@
+﻿@model PadhaiHub.ViewModels.TakeQuizViewModel
+@{
+    ViewData["Title"] = Model.Title;
+    var letters = new[] { "A", "B", "C", "D" };
+}
+
+<h1>@Model.Title</h1>
+@if (!string.IsNullOrEmpty(Model.Description))
+{
+    <p class="lead">@Model.Description</p>
+}
+
+@if (!Model.Questions.Any())
+{
+    <p>This quiz has no questions yet.</p>
+}
+else
+{
+    <form asp-action="Quiz" asp-route-id="@Model.QuizId" method="post" id="quizForm">
+        @for (var i = 0; i < Model.Questions.Count; i++)
+        {
+            var q = Model.Questions[i];
+            var options = new[] { q.OptionA, q.OptionB, q.OptionC, q.OptionD };
+
+            <fieldset class="border rounded p-3 mb-3">
+                <legend class="h6">@(i + 1). @q.QuestionText</legend>
+                @for (var o = 0; o < 4; o++)
+                {
+                    var inputId = $"q{q.QuestionId}_{letters[o]}";
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="@inputId"
+                               name="answers[@q.QuestionId]" value="@letters[o]" required />
+                        <label class="form-check-label" for="@inputId">@letters[o]. @options[o]</label>
+                    </div>
+                }
+            </fieldset>
+        }
+        <p id="quizError" class="text-danger" hidden>Please answer every question before submitting.</p>
+        <button type="submit" class="btn btn-primary">Submit answers</button>
+    </form>
+}
+
+@section Scripts {
+    <script>
+        document.getElementById("quizForm")?.addEventListener("submit", function (e) {
+            const groups = this.querySelectorAll("fieldset");
+            const unanswered = [...groups].filter(g => !g.querySelector("input:checked"));
+            groups.forEach(g => g.classList.toggle("border-danger", unanswered.includes(g)));
+            if (unanswered.length > 0) {
+                e.preventDefault();
+                document.getElementById("quizError").hidden = false;
+            }
+        });
+    </script>
+}

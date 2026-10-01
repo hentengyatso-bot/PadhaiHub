@@ -1,0 +1,20 @@
+@model PadhaiHub.Models.Lesson
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h1 class="h3">@Model.Title</h1>
+<p class="text-muted">Course: @Model.Course?.Title &middot; Order: @Model.LessonOrder</p>
+
+@if (!string.IsNullOrEmpty(Model.VideoUrl))
+{
+    <div class="ratio ratio-16x9 mb-3" style="max-width: 720px;">
+        <iframe src="@Model.VideoUrl" title="@Model.Title" allowfullscreen></iframe>
+    </div>
+}
+
+<div class="lesson-content">
+    @Html.Raw(Model.Content.Replace("\n", "<br />"))
+</div>
+
+<a class="btn btn-outline-secondary" asp-action="Index">Back to list</a>

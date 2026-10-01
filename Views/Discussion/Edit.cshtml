@@ -1,0 +1,21 @@
+﻿@model PadhaiHub.Models.DiscussionPost
+@{
+    ViewData["Title"] = "Edit post";
+}
+
+<h1 class="h3">Edit your post</h1>
+
+<form asp-action="Edit" asp-route-id="@Model.DiscussionPostId" method="post" class="col-md-8">
+    <input type="hidden" asp-for="DiscussionPostId" />
+    <div class="mb-3">
+        <label asp-for="Message" class="form-label"></label>
+        <textarea asp-for="Message" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Message" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary" asp-controller="Courses" asp-action="Details" asp-route-id="@Model.CourseId">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

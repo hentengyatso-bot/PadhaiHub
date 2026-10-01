@@ -1,0 +1,28 @@
+@model PadhaiHub.Models.Quiz
+@{
+    ViewData["Title"] = "Delete quiz";
+}
+
+<h1 class="h3">Delete quiz</h1>
+
+<div class="alert alert-warning">
+    Deleting <strong>@Model.Title</strong> also deletes its
+    @Model.Questions.Count question(s) and any quiz attempts. This cannot be undone.
+</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Course</dt>
+    <dd class="col-sm-10">@Model.Course?.Title</dd>
+
+    <dt class="col-sm-2">Title</dt>
+    <dd class="col-sm-10">@Model.Title</dd>
+
+    <dt class="col-sm-2">Questions</dt>
+    <dd class="col-sm-10">@Model.Questions.Count</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="QuizId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+</form>

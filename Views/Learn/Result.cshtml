@@ -1,0 +1,33 @@
+﻿@model PadhaiHub.ViewModels.QuizResultViewModel
+@{
+    ViewData["Title"] = "Quiz result";
+}
+
+<h1>@Model.QuizTitle: your result</h1>
+
+<section class="my-4">
+    <p class="display-6">@Model.Score / @Model.Total (@Model.Percentage%)</p>
+    <progress value="@Model.Score" max="@Model.Total" class="w-100"></progress>
+    <p class="mt-2">
+        @(Model.Percentage >= 50 ? "Well done, you passed." : "Keep practising and try again.")
+    </p>
+</section>
+
+<table class="table">
+    <thead>
+        <tr><th>Question</th><th>Your answer</th><th>Correct answer</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.Results)
+        {
+            <tr class="@(r.IsCorrect ? "table-success" : "table-danger")">
+                <td>@r.QuestionText</td>
+                <td>@(r.YourAnswer ?? "-")</td>
+                <td>@r.CorrectAnswer</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-primary" asp-controller="Courses" asp-action="Details" asp-route-id="@Model.CourseId">Back to course</a>
+<a class="btn btn-outline-secondary" asp-controller="Member" asp-action="Index">My Learning</a>

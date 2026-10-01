@@ -1,0 +1,37 @@
+@model IEnumerable<PadhaiHub.Models.Lesson>
+@{
+    ViewData["Title"] = "Lessons";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Lessons</h1>
+    <a class="btn btn-primary" asp-action="Create">+ New lesson</a>
+</div>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th style="width: 60px;">#</th>
+            <th>Title</th>
+            <th>Video</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Course?.Title</td>
+                <td>@item.LessonOrder</td>
+                <td>@item.Title</td>
+                <td>@(string.IsNullOrEmpty(item.VideoUrl) ? "—" : "Yes")</td>
+                <td class="text-end text-nowrap">
+                    <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.LessonId">Details</a>
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.LessonId">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.LessonId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

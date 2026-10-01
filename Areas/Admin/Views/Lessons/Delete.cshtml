@@ -1,0 +1,28 @@
+@model PadhaiHub.Models.Lesson
+@{
+    ViewData["Title"] = "Delete lesson";
+}
+
+<h1 class="h3">Delete lesson</h1>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete <strong>@Model.Title</strong>?
+    This cannot be undone.
+</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Course</dt>
+    <dd class="col-sm-10">@Model.Course?.Title</dd>
+
+    <dt class="col-sm-2">Order</dt>
+    <dd class="col-sm-10">@Model.LessonOrder</dd>
+
+    <dt class="col-sm-2">Title</dt>
+    <dd class="col-sm-10">@Model.Title</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="LessonId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+</form>

@@ -1,0 +1,19 @@
+﻿@model PadhaiHub.Models.Question
+@{
+    ViewData["Title"] = "Add question";
+}
+
+<h1 class="h3">Add question to "@ViewData["QuizTitle"]"</h1>
+
+<form asp-action="Create" method="post" class="col-lg-8">
+    <input type="hidden" asp-for="QuizId" />
+    <partial name="_QuestionFields" model="Model" />
+    <button type="submit" class="btn btn-primary">Save question</button>
+    <a class="btn btn-outline-secondary"
+       asp-controller="Quizzes" asp-action="Details"
+       asp-route-id="@Model.QuizId">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

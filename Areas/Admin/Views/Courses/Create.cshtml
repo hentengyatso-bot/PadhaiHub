@@ -1,0 +1,54 @@
+﻿@model PadhaiHub.ViewModels.CourseFormViewModel
+@{
+    ViewData["Title"] = "New course";
+}
+
+<h1 class="h3">New course</h1>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="col-lg-8">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="CategoryId" class="form-label"></label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-select">
+                <option value="0">-- Choose a category --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="Level" class="form-label"></label>
+            <select asp-for="Level" asp-items="ViewBag.Level" class="form-select"></select>
+            <span asp-validation-for="Level" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageFile" class="form-label"></label>
+        <input asp-for="ImageFile" type="file" class="form-control"
+               accept=".jpg,.jpeg,.png,.webp" data-preview="coverPreview" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+        <img id="coverPreview" src="/images/course-placeholder.png"
+             alt="Cover preview" class="mt-2 rounded" width="240" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/image-preview.js" asp-append-version="true"></script>
+}
